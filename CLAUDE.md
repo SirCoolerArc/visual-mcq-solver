@@ -10,7 +10,7 @@ A pipeline that takes a PNG image of a deep learning MCQ (question + four option
 - `5` → skip / unanswered
 - Anything else → treated as hallucinated (−1 penalty)
 
-Final output: `submission.csv` with columns `id, image_name, option`, matching `test.csv` row-for-row.
+Final output: `submission.csv` with columns `image_name, option` — **two columns, matching the actual `sample_submission.csv` in the repo**, not the three-column `id, image_name, option` format described in `COMPETITION_BRIEF.md`. The brief is stale; the sample file is authoritative. One row per `image_name` listed in `test.csv` (also a single `image_name` column, despite the brief's claim of `image_id, image_name`).
 
 **The real test set is hidden.** We only have 2 sample images (see [images/](images/)). At evaluation time the `images/` folder is swapped with an unseen set. The pipeline must generalize — don't hardcode to the samples.
 
@@ -145,7 +145,7 @@ parent_dir/
 └── sample_submission.csv
 ```
 
-The notebook must write `submission.csv` with columns `id, image_name, option` exactly matching `sample_submission.csv` structure.
+The notebook must write `submission.csv` with columns `image_name, option` — exactly matching the real `sample_submission.csv` in the repo (two columns, not the brief's three). One row per `image_name` in `test.csv`.
 
 ## Session kickoff checklist
 
