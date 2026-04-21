@@ -1,0 +1,36 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb_meta
+
+# IDE / editors
+.vscode/
+.idea/
+*.swp
+*~
+
+# Project-specific (large / generated / private)
+weights/
+course_materials/
+practice_set/images/
+practice_set/latex/_build/
+submission*.csv
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Secrets / env
+.env
+.env.local
