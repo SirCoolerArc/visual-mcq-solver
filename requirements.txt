@@ -9,6 +9,8 @@ torchvision>=0.20.0
 transformers>=4.49.0
 accelerate>=1.0.0
 safetensors>=0.4.5
+bitsandbytes>=0.43.0
+qwen-vl-utils>=0.0.14
 
 Pillow>=10.0.0
 pandas>=2.2.0

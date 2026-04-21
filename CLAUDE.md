@@ -84,10 +84,10 @@ Answer extraction: take the last `[1-5]` match in the generation. If none, emit 
 | Role                            | Model                              | Size       | Where                |
 |---------------------------------|------------------------------------|-----------:|----------------------|
 | **Submission (primary)**        | Qwen2.5-VL-32B-Instruct-AWQ        | ~18 GB     | L40s 48 GB (eval)    |
-| **Local dev iteration**         | Qwen2.5-VL-7B-Instruct-AWQ         | ~5–6 GB    | RTX 4060 8 GB        |
+| **Local dev iteration**         | Qwen2.5-VL-7B-Instruct (bf16 on disk, loaded in 4-bit via `bitsandbytes` NF4) | ~15 GB disk / ~5 GB VRAM | RTX 4060 8 GB |
 | **Fallback (if 32B blocks)**    | Qwen2.5-VL-14B-AWQ                 | ~8 GB      | Kaggle / L40s        |
 
-**Why Qwen2.5-VL**: strong VL reasoning on MCQ-style benchmarks, mature AWQ quantization, known-good on code-in-image and math notation.
+**Why Qwen2.5-VL**: strong VL reasoning on MCQ-style benchmarks, mature quantization support (AWQ for the 32B eval model; `bitsandbytes` 4-bit for local dev — `autoawq` was dropped from the local-dev path after it proved fragile on Windows with `torch 2.6`), known-good on code-in-image and math notation.
 
 **Not chosen: 72B.** Can't validate anywhere we have access to (even Kaggle free / Colab Pro won't fit 72B AWQ comfortably), runtime margin tight, marginal accuracy gain uncertain given self-consistency already recovers much of the gap.
 
