@@ -1,17 +1,23 @@
-# Python 3.12 + NVIDIA GPU (CUDA 12.x driver, using cu124 wheels)
-# Install: pip install -r requirements.txt
+# Python 3.10+ on Linux with an NVIDIA GPU (CUDA 12.x driver, cu124 wheels)
+# Install with: pip install -r requirements.txt
+#
+# Submission targets Qwen2.5-VL-7B-Instruct (bf16 on disk) loaded with
+# bitsandbytes NF4 4-bit at runtime. ~5 GB VRAM. Comfortably fits any modern
+# inference GPU including the contest L40s.
 
 --extra-index-url https://download.pytorch.org/whl/cu124
 
 torch>=2.5.0,<2.7.0
 torchvision>=0.20.0
 
-transformers>=4.49.0
+transformers==4.51.3
 accelerate>=1.0.0
 safetensors>=0.4.5
+
 bitsandbytes>=0.43.0
 qwen-vl-utils>=0.0.14
 
 Pillow>=10.0.0
 pandas>=2.2.0
 tqdm>=4.65.0
+huggingface_hub>=0.24.0

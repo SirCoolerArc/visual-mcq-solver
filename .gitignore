@@ -27,6 +27,9 @@ practice_set/images/
 practice_set/latex/_build/
 submission*.csv
 
+# Internal design doc — not part of the public repo
+CLAUDE.md
+
 # OS
 .DS_Store
 Thumbs.db

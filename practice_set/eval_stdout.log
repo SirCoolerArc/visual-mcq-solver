@@ -1,0 +1,83 @@
+[eval] loading model ...
+Loading weights:   0%|          | 0/729 [00:00<?, ?it/s]Loading weights:   0%|          | 1/729 [00:01<14:03,  1.16s/it]Loading weights:   0%|          | 2/729 [00:02<13:04,  1.08s/it]Loading weights:   1%|          | 4/729 [00:02<06:32,  1.85it/s]Loading weights:   1%|          | 5/729 [00:02<04:58,  2.43it/s]Loading weights:   1%|          | 6/729 [00:02<03:58,  3.03it/s]Loading weights:   2%|2         | 16/729 [00:03<00:54, 13.12it/s]Loading weights:   3%|2         | 19/729 [00:03<00:55, 12.69it/s]Loading weights:   4%|3         | 28/729 [00:03<00:33, 20.80it/s]Loading weights:   4%|4         | 31/729 [00:03<00:38, 18.08it/s]Loading weights:   5%|5         | 40/729 [00:03<00:26, 25.68it/s]Loading weights:   6%|6         | 44/729 [00:04<00:31, 21.69it/s]Loading weights:   7%|7         | 52/729 [00:04<00:25, 26.09it/s]Loading weights:   8%|7         | 55/729 [00:04<00:33, 19.94it/s]Loading weights:   9%|8         | 64/729 [00:04<00:25, 25.75it/s]Loading weights:   9%|9         | 67/729 [00:05<00:32, 20.21it/s]Loading weights:  10%|#         | 76/729 [00:05<00:24, 26.14it/s]Loading weights:  11%|#         | 79/729 [00:05<00:31, 20.65it/s]Loading weights:  12%|#2        | 88/729 [00:05<00:24, 26.27it/s]Loading weights:  12%|#2        | 91/729 [00:06<00:30, 21.22it/s]Loading weights:  14%|#3        | 100/729 [00:06<00:23, 26.66it/s]Loading weights:  14%|#4        | 103/729 [00:06<00:29, 21.05it/s]Loading weights:  15%|#5        | 112/729 [00:06<00:23, 26.51it/s]Loading weights:  16%|#5        | 115/729 [00:07<00:29, 20.50it/s]Loading weights:  17%|#7        | 124/729 [00:07<00:23, 26.08it/s]Loading weights:  17%|#7        | 127/729 [00:07<00:27, 21.67it/s]Loading weights:  19%|#8        | 136/729 [00:07<00:21, 27.04it/s]Loading weights:  19%|#9        | 139/729 [00:08<00:30, 19.26it/s]Loading weights:  20%|##        | 148/729 [00:08<00:23, 24.87it/s]Loading weights:  21%|##        | 151/729 [00:08<00:28, 20.34it/s]Loading weights:  22%|##1       | 160/729 [00:09<00:22, 25.86it/s]Loading weights:  22%|##2       | 163/729 [00:09<00:27, 20.52it/s]Loading weights:  24%|##3       | 172/729 [00:09<00:21, 25.83it/s]Loading weights:  24%|##4       | 175/729 [00:09<00:27, 20.02it/s]Loading weights:  25%|##5       | 184/729 [00:10<00:20, 26.06it/s]Loading weights:  26%|##5       | 187/729 [00:10<00:25, 21.56it/s]Loading weights:  27%|##6       | 196/729 [00:10<00:19, 27.53it/s]Loading weights:  27%|##7       | 200/729 [00:10<00:22, 23.28it/s]Loading weights:  29%|##8       | 208/729 [00:11<00:20, 25.83it/s]Loading weights:  29%|##8       | 211/729 [00:11<00:26, 19.52it/s]Loading weights:  30%|###       | 220/729 [00:11<00:20, 24.27it/s]Loading weights:  31%|###       | 223/729 [00:12<00:25, 19.58it/s]Loading weights:  32%|###1      | 232/729 [00:12<00:19, 24.98it/s]Loading weights:  32%|###2      | 235/729 [00:12<00:24, 20.06it/s]Loading weights:  33%|###3      | 244/729 [00:12<00:19, 25.35it/s]Loading weights:  34%|###3      | 247/729 [00:13<00:23, 20.41it/s]Loading weights:  35%|###5      | 256/729 [00:13<00:18, 25.93it/s]Loading weights:  36%|###5      | 259/729 [00:13<00:22, 20.64it/s]Loading weights:  37%|###6      | 268/729 [00:13<00:18, 25.35it/s]Loading weights:  37%|###7      | 271/729 [00:14<00:23, 19.35it/s]Loading weights:  38%|###7      | 276/729 [00:14<00:19, 23.07it/s]Loading weights:  38%|###8      | 280/729 [00:14<00:19, 22.52it/s]Loading weights:  39%|###8      | 283/729 [00:14<00:27, 16.43it/s]Loading weights:  40%|###9      | 290/729 [00:14<00:18, 23.74it/s]Loading weights:  40%|####      | 294/729 [00:15<00:27, 15.54it/s]Loading weights:  42%|####1     | 304/729 [00:15<00:19, 21.99it/s]Loading weights:  42%|####2     | 308/729 [00:16<00:24, 17.50it/s]Loading weights:  43%|####3     | 316/729 [00:16<00:19, 20.79it/s]Loading weights:  44%|####3     | 319/729 [00:16<00:24, 17.05it/s]Loading weights:  45%|####4     | 328/729 [00:16<00:19, 20.62it/s]Loading weights:  45%|####5     | 331/729 [00:17<00:24, 16.03it/s]Loading weights:  47%|####6     | 341/729 [00:17<00:15, 25.35it/s]Loading weights:  49%|####9     | 359/729 [00:17<00:07, 46.57it/s]Loading weights:  52%|#####2    | 381/729 [00:17<00:04, 73.71it/s]Loading weights:  55%|#####5    | 403/729 [00:17<00:03, 98.57it/s]Loading weights:  58%|#####7    | 421/729 [00:17<00:02, 114.87it/s]Loading weights:  61%|######1   | 445/729 [00:18<00:02, 140.13it/s]Loading weights:  64%|######4   | 469/729 [00:18<00:01, 161.64it/s]Loading weights:  68%|######7   | 493/729 [00:18<00:01, 178.32it/s]Loading weights:  71%|#######   | 517/729 [00:18<00:01, 190.16it/s]Loading weights:  74%|#######4  | 541/729 [00:18<00:00, 200.77it/s]Loading weights:  78%|#######7  | 565/729 [00:18<00:00, 211.26it/s]Loading weights:  81%|########  | 589/729 [00:18<00:00, 215.02it/s]Loading weights:  84%|########4 | 613/729 [00:18<00:00, 216.74it/s]Loading weights:  87%|########7 | 637/729 [00:18<00:00, 216.60it/s]Loading weights:  90%|######### | 659/729 [00:18<00:00, 207.95it/s]Loading weights:  93%|#########3| 681/729 [00:19<00:00, 209.38it/s]Loading weights:  96%|#########6| 703/729 [00:19<00:00, 211.84it/s]Loading weights: 100%|#########9| 726/729 [00:19<00:00, 190.15it/s]Loading weights: 100%|##########| 729/729 [00:19<00:00, 37.59it/s] 
+[eval] model loaded in 26.8s
+
+The following generation flags are not valid and may be ignored: ['temperature']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+[ 1/50] cnn_padding_same_01                    truth=3 pred=3 score=+1.00 ( 43.3s)
+[ 2/50] cnn_param_count_01                     truth=2 pred=2 score=+1.00 ( 63.0s)
+[ 3/50] cnn_shape_01                           truth=1 pred=1 score=+1.00 ( 70.4s)
+[ 4/50] cnn_shape_stack_01                     truth=1 pred=3 score=-0.25 ( 71.3s)
+[ 5/50] cnn_receptive_field_01                 truth=2 pred=3 score=-0.25 ( 74.4s)
+[ 6/50] cnn_depthwise_separable_01             truth=3 pred=4 score=-0.25 ( 86.9s)
+[ 7/50] cnn_transposed_conv_01                 truth=2 pred=2 score=+1.00 ( 50.2s)
+[ 8/50] cnn_dilation_rf_01                     truth=2 pred=4 score=-0.25 ( 56.4s)
+[ 9/50] cnn_flops_01                           truth=3 pred=4 score=-0.25 ( 71.3s)
+[10/50] cnn_1x1_purpose_01                     truth=2 pred=2 score=+1.00 ( 37.9s)
+[11/50] loss_bce_basic_01                      truth=2 pred=2 score=+1.00 ( 54.2s)
+[12/50] activation_dying_relu_01               truth=2 pred=2 score=+1.00 ( 30.6s)
+[13/50] loss_focal_01                          truth=2 pred=2 score=+1.00 ( 39.5s)
+[14/50] loss_label_smoothing_01                truth=2 pred=2 score=+1.00 ( 58.7s)
+[15/50] loss_softmax_temperature_01            truth=2 pred=2 score=+1.00 ( 49.0s)
+[16/50] loss_mse_vs_ce_01                      truth=2 pred=2 score=+1.00 ( 39.9s)
+[17/50] opt_adam_first_moment_01               truth=1 pred=1 score=+1.00 ( 32.8s)
+[18/50] opt_momentum_velocity_01               truth=2 pred=2 score=+1.00 ( 35.8s)
+[19/50] opt_weight_decay_adamw_01              truth=4 pred=2 score=-0.25 ( 43.8s)
+[20/50] loss_ce_gradient_logits_01             truth=1 pred=2 score=-0.25 ( 77.9s)
+[21/50] gan_vs_vae_01                          truth=1 pred=1 score=+1.00 ( 40.5s)
+[22/50] gan_optimal_discriminator_01           truth=3 pred=3 score=+1.00 ( 55.1s)
+[23/50] gan_mode_collapse_01                   truth=2 pred=2 score=+1.00 ( 34.2s)
+[24/50] gan_wgan_lipschitz_01                  truth=1 pred=1 score=+1.00 ( 38.9s)
+[25/50] gan_non_saturating_01                  truth=2 pred=2 score=+1.00 ( 32.2s)
+[26/50] gan_js_optimum_01                      truth=1 pred=1 score=+1.00 ( 50.3s)
+[27/50] gan_disjoint_support_01                truth=2 pred=2 score=+1.00 ( 35.8s)
+[28/50] gan_wgan_gp_penalty_01                 truth=2 pred=2 score=+1.00 ( 30.3s)
+[29/50] vae_elbo_decomposition_01              truth=1 pred=1 score=+1.00 ( 41.0s)
+[30/50] vae_reparameterization_01              truth=3 pred=3 score=+1.00 ( 37.4s)
+[31/50] vae_kl_closed_form_01                  truth=1 pred=2 score=-0.25 ( 80.6s)
+[32/50] vae_posterior_collapse_01              truth=3 pred=3 score=+1.00 ( 41.6s)
+[33/50] vae_bernoulli_decoder_01               truth=1 pred=1 score=+1.00 ( 38.4s)
+[34/50] vae_elbo_gap_01                        truth=3 pred=3 score=+1.00 ( 51.8s)
+[35/50] vae_beta_vae_01                        truth=3 pred=3 score=+1.00 ( 58.3s)
+[36/50] vae_kl_compute_01                      truth=2 pred=1 score=-0.25 (105.8s)
+[37/50] rnn_gru_vs_lstm_01                     truth=2 pred=2 score=+1.00 ( 38.9s)
+[38/50] rnn_gradient_vanishing_01              truth=2 pred=2 score=+1.00 ( 36.6s)
+[39/50] rnn_lstm_cell_update_01                truth=2 pred=2 score=+1.00 ( 29.8s)
+[40/50] rnn_gru_param_count_01                 truth=2 pred=1 score=-0.25 ( 66.9s)
+[41/50] rnn_lstm_cell_gradient_01              truth=1 pred=1 score=+1.00 ( 33.9s)
+[42/50] rnn_exposure_bias_01                   truth=1 pred=1 score=+1.00 ( 30.3s)
+[43/50] ae_linear_pca_01                       truth=2 pred=2 score=+1.00 ( 29.7s)
+[44/50] ae_denoising_01                        truth=2 pred=2 score=+1.00 ( 29.7s)
+[45/50] ae_sparse_penalty_01                   truth=2 pred=2 score=+1.00 ( 28.3s)
+[46/50] ae_contractive_01                      truth=1 pred=1 score=+1.00 ( 49.3s)
+[47/50] mlp_pytorch_01                         truth=1 pred=3 score=-0.25 ( 43.7s)
+[48/50] dropout_inverted_01                    truth=1 pred=3 score=-0.25 ( 26.5s)
+[49/50] bn_train_eval_01                       truth=2 pred=2 score=+1.00 ( 29.6s)
+[50/50] init_he_vs_xavier_01                   truth=2 pred=2 score=+1.00 ( 44.7s)
+
+============================================================
+[summary] n=50   wall=2377.9s   avg=47.6s/q
+  correct      :  38  (+38.00)
+  wrong        :  12  (-3.00)
+  skipped      :   0  (+0.00)
+  hallucinated :   0  (-0.00)
+  total score  : +35.00 / 50
+  raw accuracy : 76.0%  (correct / n)
+  attempted acc: 76.0%  (correct / attempted)
+
+[by topic]
+  bucket                   n correct wrong skip hall   score
+  autoencoder              4       4     0    0    0    4.00
+  cnn                     10       5     5    0    0    3.75
+  gan                      8       8     0    0    0    8.00
+  loss_opt                10       8     2    0    0    7.50
+  misc                     4       2     2    0    0    1.50
+  rnn                      6       5     1    0    0    4.75
+  vae                      8       6     2    0    0    5.50
+
+[by difficulty]
+  bucket                   n correct wrong skip hall   score
+  easy                     7       6     1    0    0    5.75
+  hard                    15      10     5    0    0    8.75
+  moderate                28      22     6    0    0   20.50
+
+[ok] wrote per-question log to eval_log.csv
