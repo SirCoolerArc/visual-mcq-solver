@@ -23,9 +23,22 @@ env/
 # Project-specific (large / generated / private)
 weights/
 course_materials/
-practice_set/images/
-practice_set/latex/_build/
 submission*.csv
+
+# Development artifacts kept local only (not part of the public repo).
+# These are useful for running our own evals and re-rendering questions but
+# the contest grader doesn't need them.
+images/
+test.csv
+sample_submission.csv
+src/eval.py
+practice_set/
+practice_set_hard/
+experiments/
+notebook.ipynb
+
+# Build outputs
+project_*.zip
 
 # Internal design doc — not part of the public repo
 CLAUDE.md

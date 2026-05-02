@@ -1,9 +1,7 @@
-"""Rung-1 sanity check: load Qwen2.5-VL-7B in 4-bit and answer one MCQ image.
+"""Qwen2.5-VL inference helpers for GNR-638 Project 2.
 
-Run from project root:
-    python -m src.inference
-or equivalently:
-    python src/inference.py
+Loads the model from local weights (no internet), builds VLM inputs, runs
+greedy or self-consistent decoding, and parses answers into {1..5}.
 
 Expects the model to be pre-downloaded to weights/qwen2.5-vl-7b/ (see README).
 """
@@ -44,41 +42,6 @@ SYSTEM_PROMPT = (
 )
 
 
-# --- AWQ config patcher (kept commented out; the submission ships 7B-bnb only) -------
-# We validated this on Kaggle: the Qwen2.5-VL-32B-Instruct-AWQ checkpoint stores the
-# vision tower and lm_head as plain bf16 (`.weight` keys), but its config.json's
-# `modules_to_not_convert` list doesn't include `visual` and `lm_head`. Without the
-# patch, transformers' AwqQuantizer tries to AWQ-convert those layers, can't find
-# the expected qweight/qzeros/scales, and leaves them randomly initialized. Model
-# "loads" but emits garbage from the vision encoder and the final logits.
-#
-# If we ever revisit the 32B-AWQ path, restore this function and call it from the
-# `quantization == "awq"` branch in load_model below.
-#
-# def _ensure_awq_config_patched(model_dir: Path) -> None:
-#     config_path = model_dir / "config.json"
-#     if not config_path.exists():
-#         return
-#     try:
-#         with config_path.open(encoding="utf-8") as f:
-#             cfg = json.load(f)
-#     except (json.JSONDecodeError, OSError):
-#         return
-#     qc = cfg.get("quantization_config")
-#     if not qc or "awq" not in str(qc.get("quant_method", "")).lower():
-#         return
-#     existing = list(qc.get("modules_to_not_convert") or [])
-#     needed = [n for n in ("visual", "lm_head") if n not in existing]
-#     if not needed:
-#         return
-#     qc["modules_to_not_convert"] = existing + needed
-#     cfg["quantization_config"] = qc
-#     try:
-#         with config_path.open("w", encoding="utf-8") as f:
-#             json.dump(cfg, f, indent=2)
-#         print(f"[load_model] patched config.json: added {needed} to modules_to_not_convert")
-#     except OSError as e:
-#         print(f"[load_model] WARN: could not patch config.json ({e}); model output may be garbage")
 
 
 def _detect_quantization(model_dir: Path) -> str:
@@ -122,9 +85,6 @@ def load_model(model_dir: Path = MODEL_DIR, quantization: str = "auto"):
             bnb_4bit_use_double_quant=True,
         )
     elif quantization == "awq":
-        # 32B-AWQ path is not used by the current submission. If we revisit it,
-        # uncomment the call below and the _ensure_awq_config_patched function above.
-        # _ensure_awq_config_patched(model_dir)
         pass
     elif quantization == "none":
         pass
@@ -210,82 +170,6 @@ def answer_image_sc(
     return majority, confidence, answers, generations
 
 
-def answer_image_sc_logprob(
-    image_path: Path,
-    model,
-    processor,
-    n_samples: int = 5,
-    temperature: float = 0.7,
-) -> tuple[int, float, int, float, list[int], list[float], list[str]]:
-    """SC decoding that returns BOTH equal-weight and logprob-weighted aggregations.
-
-    Generates N samples just like `answer_image_sc` but additionally captures
-    the logprob of each sample's answer token. Computes both vote rules from
-    the same generation set so they can be compared apples-to-apples on a
-    single eval run.
-
-    Returns:
-        (eq_majority, eq_confidence,
-         lp_majority, lp_confidence,
-         per_sample_answers, per_sample_answer_logprobs, per_sample_generations)
-
-    where eq_* are equal-weight (count-based) and lp_* are logprob-weighted.
-    Both rules use the same skip-averse tiebreak.
-
-    Experimental — not used by the production submission path. Keeps
-    `answer_image_sc` byte-identical so we can A/B them without affecting the
-    validated submission.
-    """
-    inputs = _build_inputs(image_path, processor, model.device)
-    prompt_len = inputs.input_ids.shape[1]
-
-    generations: list[str] = []
-    logprobs: list[float] = []
-
-    for _ in range(n_samples):
-        with torch.no_grad():
-            if n_samples == 1:
-                output = model.generate(
-                    **inputs, max_new_tokens=1024, do_sample=False,
-                    output_scores=True, return_dict_in_generate=True,
-                )
-            else:
-                output = model.generate(
-                    **inputs,
-                    max_new_tokens=1024,
-                    do_sample=True,
-                    temperature=temperature,
-                    output_scores=True,
-                    return_dict_in_generate=True,
-                )
-
-        output_ids = output.sequences
-        scores = output.scores  # tuple of (1, vocab) tensors, one per generated token
-        generated = output_ids[:, prompt_len:]
-        decoded = processor.batch_decode(generated, skip_special_tokens=True)[0]
-        generations.append(decoded)
-
-        # Extract logprob of the parsed answer token from this sample.
-        sample_answer = parse_answer(decoded)
-        sample_lp = _extract_answer_token_logprob(
-            output_ids, scores, prompt_len, processor, sample_answer
-        )
-        logprobs.append(sample_lp)
-
-    answers = [parse_answer(g) for g in generations]
-
-    # Equal-weight aggregation (matches answer_image_sc exactly).
-    eq_majority, eq_count = _majority_vote(answers)
-    eq_confidence = eq_count / n_samples
-
-    # Logprob-weighted aggregation.
-    lp_majority, lp_confidence = _logprob_weighted_vote(answers, logprobs)
-
-    return (
-        eq_majority, eq_confidence,
-        lp_majority, lp_confidence,
-        answers, logprobs, generations,
-    )
 
 
 def _majority_vote(answers: list[int]) -> tuple[int, int]:
@@ -305,74 +189,7 @@ def _majority_vote(answers: list[int]) -> tuple[int, int]:
     return winner, top_count
 
 
-def _logprob_weighted_vote(
-    answers: list[int], logprobs: list[float]
-) -> tuple[int, float]:
-    """Logprob-weighted vote with the same skip-averse tiebreak as `_majority_vote`.
 
-    Each sample's answer contributes `exp(logprob)` to its option's score. The
-    option with the highest total wins. Returns (winner, normalized_confidence)
-    where confidence = winner_score / sum_of_all_scores. Ties (within float
-    epsilon) prefer non-skip answers for the same EV reason as the equal-weight
-    rule.
-
-    Skip handling: a `5` answer with high logprob still increases skip's tally,
-    so the model can self-skip on confident "I don't know" outputs. The
-    skip-averse tiebreak only kicks in when totals are numerically equal.
-    """
-    import math
-    from collections import defaultdict
-
-    scores: dict[int, float] = defaultdict(float)
-    for ans, lp in zip(answers, logprobs):
-        scores[ans] += math.exp(lp)
-
-    if not scores:
-        return 5, 0.0
-
-    top_score = max(scores.values())
-    tied = [a for a, s in scores.items() if abs(s - top_score) < 1e-9]
-    non_skip = [a for a in tied if a != 5]
-    winner = non_skip[0] if non_skip else tied[0]
-    total = sum(scores.values())
-    confidence = scores[winner] / total if total > 0 else 0.0
-    return winner, confidence
-
-
-def _extract_answer_token_logprob(
-    output_ids,        # tensor (batch=1, seq_len) - full sequence including prompt
-    scores,            # tuple of (1, vocab_size) tensors - one per generated token
-    prompt_len: int,   # number of prompt tokens to skip
-    processor,         # for decoding individual tokens
-    parsed_answer: int,
-) -> float:
-    """Walk the generated tokens backwards and return the logprob of the last
-    token matching the parsed answer.
-
-    Matches a token if its decoded text (after stripping whitespace and common
-    punctuation, case-normalized) equals the parsed digit ("1"-"5") or its
-    letter equivalent ("A"-"D" for 1-4). Returns -10.0 (~4.5e-5 probability)
-    if no matching token is found, which is a sensible "very low confidence"
-    fallback for cases where the parser had to guess.
-    """
-    import torch.nn.functional as F
-
-    new_tokens = output_ids[0, prompt_len:]
-    target_chars: set[str] = {str(parsed_answer)}
-    if 1 <= parsed_answer <= 4:
-        target_chars.add("ABCD"[parsed_answer - 1])
-
-    strip_re = re.compile(r"[\s\*\.\,\:\;`\-]+")
-    for i in range(len(new_tokens) - 1, -1, -1):
-        token_id = int(new_tokens[i].item())
-        token_text = processor.tokenizer.decode([token_id], skip_special_tokens=True)
-        cleaned = strip_re.sub("", token_text).upper()
-        if cleaned in target_chars:
-            logits = scores[i][0]
-            log_probs = F.log_softmax(logits, dim=-1)
-            return float(log_probs[token_id])
-
-    return -10.0
 
 
 _LETTER_TO_DIGIT = {"A": 1, "B": 2, "C": 3, "D": 4}
@@ -410,15 +227,3 @@ def parse_answer(generation: str) -> int:
     return 5
 
 
-def main() -> None:
-    model, processor = load_model()
-    for name in ("image_1", "image_2"):
-        img_path = PROJECT_ROOT / "images" / f"{name}.png"
-        answer, full = answer_image(img_path, model, processor)
-        print(f"=== {name} ===")
-        print(full)
-        print(f"--> parsed answer: {answer}\n")
-
-
-if __name__ == "__main__":
-    main()
