@@ -1,0 +1,11 @@
+* text=auto
+
+# Force LF line endings on shell scripts so bash works correctly when the
+# repo is cloned to a Linux grader (script is committed by a Windows user).
+*.bash text eol=lf
+*.sh   text eol=lf
+*.py   text eol=lf
+
+# Treat binary blobs as binary (no eol conversion).
+*.png  binary
+*.pdf  binary

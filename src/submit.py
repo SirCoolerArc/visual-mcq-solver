@@ -3,11 +3,12 @@ both local-calibration and contest-eval paths.
 
 At contest eval, the TAs point us at a parent directory containing:
     <parent>/images/*.png
-    <parent>/test.csv                 # column: image_name
-    <parent>/sample_submission.csv    # columns: image_name, option  (schema reference)
+    <parent>/test.csv                 # column: image_name OR id
+    <parent>/sample_submission.csv    # columns: id, image_name, option  (schema reference)
 
 This script reads test.csv, runs self-consistent decoding on each image, and
-writes submission.csv with columns [image_name, option]. Option is guaranteed
+writes submission.csv with columns [id, image_name, option] (id == image_name).
+Option is guaranteed
 to be in {1, 2, 3, 4, 5} - the iron-clad invariant is enforced at write time.
 
 If <parent>/ground_truth.csv exists (our practice set), it additionally scores
@@ -139,8 +140,18 @@ def main() -> None:
 
     with test_csv.open(encoding="utf-8") as f:
         test_rows = list(csv.DictReader(f))
-    if not test_rows or "image_name" not in test_rows[0]:
-        sys.exit(f"test.csv must have an 'image_name' column. Got: {list(test_rows[0].keys()) if test_rows else 'empty file'}")
+    if not test_rows:
+        sys.exit("test.csv is empty.")
+    cols = list(test_rows[0].keys())
+    # Test sets sometimes have an `image_name` column, sometimes `id` (per the
+    # contest TA: "for test.csv it'll be id"). Accept either; treat the value
+    # as the per-image identifier and the on-disk PNG stem.
+    if "image_name" in cols:
+        id_col = "image_name"
+    elif "id" in cols:
+        id_col = "id"
+    else:
+        sys.exit(f"test.csv must have an 'image_name' or 'id' column. Got: {cols}")
 
     # Optional scoring path (practice set).
     truth_by_name: dict[str, int] = {}
@@ -158,10 +169,10 @@ def main() -> None:
     print(f"[submit] n_samples={args.n_samples}  temperature={args.temperature}  tau={args.tau}")
     print(f"[submit] test questions: {len(test_rows)}")
 
-    # Pick the smoke-test image: first image_name in test.csv that exists on disk.
+    # Pick the smoke-test image: first id in test.csv that exists on disk.
     smoke_image = None
     for r in test_rows:
-        candidate = images_dir / f"{r['image_name']}.png"
+        candidate = images_dir / f"{r[id_col]}.png"
         if candidate.exists():
             smoke_image = candidate
             break
@@ -182,13 +193,13 @@ def main() -> None:
     run_start = time.time()
 
     for i, row in enumerate(test_rows, 1):
-        image_name = row["image_name"]
+        image_name = row[id_col]
         img_path = images_dir / f"{image_name}.png"
 
         if not img_path.exists():
             # Defensive: don't crash the whole run on a missing image. Emit skip.
             print(f"[{i:>3}/{len(test_rows)}] {image_name} MISSING image -> emit 5")
-            sub_rows.append({"image_name": image_name, "option": 5})
+            sub_rows.append({"id": image_name, "image_name": image_name, "option": 5})
             continue
 
         t_q = time.time()
@@ -206,7 +217,7 @@ def main() -> None:
         if predicted not in VALID_ANSWERS:
             predicted = 5
 
-        sub_rows.append({"image_name": image_name, "option": predicted})
+        sub_rows.append({"id": image_name, "image_name": image_name, "option": predicted})
 
         if image_name in truth_by_name:
             truth = truth_by_name[image_name]
@@ -251,7 +262,7 @@ def main() -> None:
 
     output.parent.mkdir(parents=True, exist_ok=True)
     with output.open("w", newline="", encoding="utf-8") as f:
-        w = csv.DictWriter(f, fieldnames=["image_name", "option"])
+        w = csv.DictWriter(f, fieldnames=["id", "image_name", "option"])
         w.writeheader()
         w.writerows(sub_rows)
     print(f"\n[ok] wrote {len(sub_rows)} predictions to {output}")

@@ -210,6 +210,84 @@ def answer_image_sc(
     return majority, confidence, answers, generations
 
 
+def answer_image_sc_logprob(
+    image_path: Path,
+    model,
+    processor,
+    n_samples: int = 5,
+    temperature: float = 0.7,
+) -> tuple[int, float, int, float, list[int], list[float], list[str]]:
+    """SC decoding that returns BOTH equal-weight and logprob-weighted aggregations.
+
+    Generates N samples just like `answer_image_sc` but additionally captures
+    the logprob of each sample's answer token. Computes both vote rules from
+    the same generation set so they can be compared apples-to-apples on a
+    single eval run.
+
+    Returns:
+        (eq_majority, eq_confidence,
+         lp_majority, lp_confidence,
+         per_sample_answers, per_sample_answer_logprobs, per_sample_generations)
+
+    where eq_* are equal-weight (count-based) and lp_* are logprob-weighted.
+    Both rules use the same skip-averse tiebreak.
+
+    Experimental — not used by the production submission path. Keeps
+    `answer_image_sc` byte-identical so we can A/B them without affecting the
+    validated submission.
+    """
+    inputs = _build_inputs(image_path, processor, model.device)
+    prompt_len = inputs.input_ids.shape[1]
+
+    generations: list[str] = []
+    logprobs: list[float] = []
+
+    for _ in range(n_samples):
+        with torch.no_grad():
+            if n_samples == 1:
+                output = model.generate(
+                    **inputs, max_new_tokens=1024, do_sample=False,
+                    output_scores=True, return_dict_in_generate=True,
+                )
+            else:
+                output = model.generate(
+                    **inputs,
+                    max_new_tokens=1024,
+                    do_sample=True,
+                    temperature=temperature,
+                    output_scores=True,
+                    return_dict_in_generate=True,
+                )
+
+        output_ids = output.sequences
+        scores = output.scores  # tuple of (1, vocab) tensors, one per generated token
+        generated = output_ids[:, prompt_len:]
+        decoded = processor.batch_decode(generated, skip_special_tokens=True)[0]
+        generations.append(decoded)
+
+        # Extract logprob of the parsed answer token from this sample.
+        sample_answer = parse_answer(decoded)
+        sample_lp = _extract_answer_token_logprob(
+            output_ids, scores, prompt_len, processor, sample_answer
+        )
+        logprobs.append(sample_lp)
+
+    answers = [parse_answer(g) for g in generations]
+
+    # Equal-weight aggregation (matches answer_image_sc exactly).
+    eq_majority, eq_count = _majority_vote(answers)
+    eq_confidence = eq_count / n_samples
+
+    # Logprob-weighted aggregation.
+    lp_majority, lp_confidence = _logprob_weighted_vote(answers, logprobs)
+
+    return (
+        eq_majority, eq_confidence,
+        lp_majority, lp_confidence,
+        answers, logprobs, generations,
+    )
+
+
 def _majority_vote(answers: list[int]) -> tuple[int, int]:
     """Majority vote with skip-averse tiebreak.
 
@@ -225,6 +303,76 @@ def _majority_vote(answers: list[int]) -> tuple[int, int]:
     non_skip = [a for a in tied if a != 5]
     winner = non_skip[0] if non_skip else tied[0]
     return winner, top_count
+
+
+def _logprob_weighted_vote(
+    answers: list[int], logprobs: list[float]
+) -> tuple[int, float]:
+    """Logprob-weighted vote with the same skip-averse tiebreak as `_majority_vote`.
+
+    Each sample's answer contributes `exp(logprob)` to its option's score. The
+    option with the highest total wins. Returns (winner, normalized_confidence)
+    where confidence = winner_score / sum_of_all_scores. Ties (within float
+    epsilon) prefer non-skip answers for the same EV reason as the equal-weight
+    rule.
+
+    Skip handling: a `5` answer with high logprob still increases skip's tally,
+    so the model can self-skip on confident "I don't know" outputs. The
+    skip-averse tiebreak only kicks in when totals are numerically equal.
+    """
+    import math
+    from collections import defaultdict
+
+    scores: dict[int, float] = defaultdict(float)
+    for ans, lp in zip(answers, logprobs):
+        scores[ans] += math.exp(lp)
+
+    if not scores:
+        return 5, 0.0
+
+    top_score = max(scores.values())
+    tied = [a for a, s in scores.items() if abs(s - top_score) < 1e-9]
+    non_skip = [a for a in tied if a != 5]
+    winner = non_skip[0] if non_skip else tied[0]
+    total = sum(scores.values())
+    confidence = scores[winner] / total if total > 0 else 0.0
+    return winner, confidence
+
+
+def _extract_answer_token_logprob(
+    output_ids,        # tensor (batch=1, seq_len) - full sequence including prompt
+    scores,            # tuple of (1, vocab_size) tensors - one per generated token
+    prompt_len: int,   # number of prompt tokens to skip
+    processor,         # for decoding individual tokens
+    parsed_answer: int,
+) -> float:
+    """Walk the generated tokens backwards and return the logprob of the last
+    token matching the parsed answer.
+
+    Matches a token if its decoded text (after stripping whitespace and common
+    punctuation, case-normalized) equals the parsed digit ("1"-"5") or its
+    letter equivalent ("A"-"D" for 1-4). Returns -10.0 (~4.5e-5 probability)
+    if no matching token is found, which is a sensible "very low confidence"
+    fallback for cases where the parser had to guess.
+    """
+    import torch.nn.functional as F
+
+    new_tokens = output_ids[0, prompt_len:]
+    target_chars: set[str] = {str(parsed_answer)}
+    if 1 <= parsed_answer <= 4:
+        target_chars.add("ABCD"[parsed_answer - 1])
+
+    strip_re = re.compile(r"[\s\*\.\,\:\;`\-]+")
+    for i in range(len(new_tokens) - 1, -1, -1):
+        token_id = int(new_tokens[i].item())
+        token_text = processor.tokenizer.decode([token_id], skip_special_tokens=True)
+        cleaned = strip_re.sub("", token_text).upper()
+        if cleaned in target_chars:
+            logits = scores[i][0]
+            log_probs = F.log_softmax(logits, dim=-1)
+            return float(log_probs[token_id])
+
+    return -10.0
 
 
 _LETTER_TO_DIGIT = {"A": 1, "B": 2, "C": 3, "D": 4}

@@ -1,0 +1,80 @@
+[logprob] evaluating on 50 questions
+[logprob] n_samples=5  temperature=0.7
+
+[logprob] loading model ...
+[load_model] dir=qwen2.5-vl-7b  quantization=bnb_nf4
+Loading weights:   0%|          | 0/729 [00:00<?, ?it/s]Loading weights:   0%|          | 1/729 [00:00<10:41,  1.13it/s]Loading weights:   0%|          | 2/729 [00:01<10:45,  1.13it/s]Loading weights:   1%|          | 4/729 [00:02<05:00,  2.41it/s]Loading weights:   1%|          | 5/729 [00:02<03:53,  3.10it/s]Loading weights:   1%|          | 6/729 [00:02<03:06,  3.88it/s]Loading weights:   2%|2         | 16/729 [00:02<00:43, 16.33it/s]Loading weights:   3%|2         | 19/729 [00:02<00:46, 15.42it/s]Loading weights:   4%|3         | 28/729 [00:02<00:28, 24.81it/s]Loading weights:   4%|4         | 32/729 [00:03<00:30, 22.49it/s]Loading weights:   5%|5         | 40/729 [00:03<00:23, 28.87it/s]Loading weights:   6%|6         | 44/729 [00:03<00:26, 25.42it/s]Loading weights:   7%|7         | 52/729 [00:03<00:21, 31.40it/s]Loading weights:   8%|7         | 56/729 [00:03<00:24, 27.17it/s]Loading weights:   9%|8         | 64/729 [00:03<00:20, 32.89it/s]Loading weights:   9%|9         | 68/729 [00:04<00:23, 27.92it/s]Loading weights:  10%|#         | 76/729 [00:04<00:19, 32.66it/s]Loading weights:  11%|#         | 80/729 [00:04<00:23, 27.06it/s]Loading weights:  12%|#2        | 88/729 [00:04<00:19, 32.83it/s]Loading weights:  13%|#2        | 92/729 [00:04<00:22, 27.94it/s]Loading weights:  14%|#3        | 100/729 [00:05<00:19, 32.71it/s]Loading weights:  14%|#4        | 104/729 [00:05<00:22, 27.27it/s]Loading weights:  15%|#5        | 112/729 [00:05<00:19, 31.28it/s]Loading weights:  16%|#5        | 116/729 [00:05<00:23, 26.04it/s]Loading weights:  16%|#6        | 120/729 [00:05<00:21, 28.23it/s]Loading weights:  17%|#7        | 124/729 [00:06<00:21, 28.21it/s]Loading weights:  18%|#7        | 128/729 [00:06<00:27, 22.00it/s]Loading weights:  19%|#8        | 136/729 [00:06<00:21, 27.29it/s]Loading weights:  19%|#9        | 139/729 [00:06<00:26, 22.27it/s]Loading weights:  20%|##        | 148/729 [00:07<00:19, 30.12it/s]Loading weights:  21%|##        | 152/729 [00:07<00:22, 25.89it/s]Loading weights:  22%|##1       | 160/729 [00:07<00:18, 30.27it/s]Loading weights:  22%|##2       | 164/729 [00:07<00:22, 25.39it/s]Loading weights:  24%|##3       | 172/729 [00:07<00:18, 30.11it/s]Loading weights:  24%|##4       | 176/729 [00:08<00:21, 25.79it/s]Loading weights:  25%|##5       | 184/729 [00:08<00:17, 30.62it/s]Loading weights:  26%|##5       | 188/729 [00:08<00:20, 25.88it/s]Loading weights:  27%|##6       | 196/729 [00:08<00:17, 30.72it/s]Loading weights:  27%|##7       | 200/729 [00:08<00:20, 25.76it/s]Loading weights:  29%|##8       | 208/729 [00:09<00:17, 30.51it/s]Loading weights:  29%|##9       | 212/729 [00:09<00:20, 24.73it/s]Loading weights:  30%|###       | 220/729 [00:09<00:17, 28.73it/s]Loading weights:  31%|###       | 224/729 [00:09<00:20, 24.70it/s]Loading weights:  32%|###1      | 232/729 [00:10<00:16, 29.91it/s]Loading weights:  32%|###2      | 236/729 [00:10<00:20, 24.60it/s]Loading weights:  33%|###3      | 244/729 [00:10<00:17, 27.92it/s]Loading weights:  34%|###3      | 247/729 [00:10<00:21, 22.89it/s]Loading weights:  35%|###5      | 256/729 [00:10<00:16, 29.38it/s]Loading weights:  36%|###5      | 260/729 [00:11<00:18, 24.94it/s]Loading weights:  37%|###6      | 268/729 [00:11<00:15, 29.34it/s]Loading weights:  37%|###7      | 272/729 [00:11<00:19, 23.14it/s]Loading weights:  38%|###8      | 280/729 [00:11<00:16, 27.51it/s]Loading weights:  39%|###8      | 284/729 [00:12<00:19, 22.96it/s]Loading weights:  40%|###9      | 288/729 [00:12<00:26, 16.80it/s]Loading weights:  40%|####      | 292/729 [00:12<00:23, 18.88it/s]Loading weights:  40%|####      | 295/729 [00:13<00:25, 16.89it/s]Loading weights:  42%|####1     | 304/729 [00:13<00:17, 23.81it/s]Loading weights:  42%|####2     | 307/729 [00:13<00:21, 19.77it/s]Loading weights:  43%|####3     | 316/729 [00:13<00:16, 25.33it/s]Loading weights:  44%|####3     | 319/729 [00:13<00:19, 20.74it/s]Loading weights:  45%|####4     | 328/729 [00:14<00:15, 26.38it/s]Loading weights:  45%|####5     | 331/729 [00:14<00:18, 21.60it/s]Loading weights:  47%|####7     | 345/729 [00:14<00:09, 38.77it/s]Loading weights:  50%|#####     | 367/729 [00:14<00:05, 70.15it/s]Loading weights:  54%|#####3    | 391/729 [00:14<00:03, 102.57it/s]Loading weights:  57%|#####7    | 417/729 [00:14<00:02, 134.48it/s]Loading weights:  60%|######    | 441/729 [00:14<00:01, 157.78it/s]Loading weights:  64%|######3   | 463/729 [00:15<00:01, 170.08it/s]Loading weights:  67%|######6   | 487/729 [00:15<00:01, 185.10it/s]Loading weights:  70%|#######   | 511/729 [00:15<00:01, 199.24it/s]Loading weights:  74%|#######3  | 537/729 [00:15<00:00, 210.33it/s]Loading weights:  77%|#######6  | 561/729 [00:15<00:00, 217.42it/s]Loading weights:  81%|########  | 587/729 [00:15<00:00, 223.31it/s]Loading weights:  84%|########3 | 612/729 [00:15<00:00, 230.69it/s]Loading weights:  87%|########7 | 637/729 [00:15<00:00, 230.88it/s]Loading weights:  91%|######### | 662/729 [00:15<00:00, 232.27it/s]Loading weights:  95%|#########4| 689/729 [00:16<00:00, 241.41it/s]Loading weights:  98%|#########8| 715/729 [00:16<00:00, 237.45it/s]Loading weights: 100%|##########| 729/729 [00:16<00:00, 44.71it/s] 
+[logprob] model loaded in 22.0s
+
+[ 1/50] cnn_padding_same_01                    truth=3 eq=3(1.00/+1.00) lp=3(1.00/+1.00) (242.8s) 
+[ 2/50] cnn_param_count_01                     truth=2 eq=2(0.80/+1.00) lp=2(0.74/+1.00) (337.7s) 
+[ 3/50] cnn_shape_01                           truth=1 eq=1(1.00/+1.00) lp=1(1.00/+1.00) (418.1s) 
+[ 4/50] cnn_shape_stack_01                     truth=1 eq=1(1.00/+1.00) lp=1(1.00/+1.00) (476.8s) 
+[ 5/50] cnn_receptive_field_01                 truth=2 eq=3(0.60/-0.25) lp=3(0.82/-0.25) (413.9s) 
+[ 6/50] cnn_depthwise_separable_01             truth=3 eq=1(0.80/-0.25) lp=1(0.85/-0.25) (495.6s) 
+[ 7/50] cnn_transposed_conv_01                 truth=2 eq=2(0.40/+1.00) lp=2(0.38/+1.00) (401.5s) 
+[ 8/50] cnn_dilation_rf_01                     truth=2 eq=3(0.40/-0.25) lp=3(0.46/-0.25) (398.4s) 
+[ 9/50] cnn_flops_01                           truth=3 eq=2(0.60/-0.25) lp=3(0.50/+1.00) (392.6s) DIFFER
+[10/50] cnn_1x1_purpose_01                     truth=2 eq=2(1.00/+1.00) lp=2(1.00/+1.00) (315.1s) 
+[11/50] loss_bce_basic_01                      truth=2 eq=2(0.80/+1.00) lp=2(0.98/+1.00) (335.8s) 
+[12/50] activation_dying_relu_01               truth=2 eq=2(1.00/+1.00) lp=2(1.00/+1.00) (297.4s) 
+[13/50] loss_focal_01                          truth=2 eq=2(1.00/+1.00) lp=2(1.00/+1.00) (338.5s) 
+[14/50] loss_label_smoothing_01                truth=2 eq=2(0.40/+1.00) lp=2(0.38/+1.00) (393.7s) 
+[15/50] loss_softmax_temperature_01            truth=2 eq=2(0.80/+1.00) lp=2(0.97/+1.00) (380.0s) 
+[16/50] loss_mse_vs_ce_01                      truth=2 eq=2(1.00/+1.00) lp=2(1.00/+1.00) (333.6s) 
+[17/50] opt_adam_first_moment_01               truth=1 eq=1(0.80/+1.00) lp=1(0.98/+1.00) (289.3s) 
+[18/50] opt_momentum_velocity_01               truth=2 eq=2(0.60/+1.00) lp=2(0.79/+1.00) (332.5s) 
+[19/50] opt_weight_decay_adamw_01              truth=4 eq=2(0.40/-0.25) lp=2(0.70/-0.25) (377.8s) 
+[20/50] loss_ce_gradient_logits_01             truth=1 eq=4(0.60/-0.25) lp=4(0.63/-0.25) (556.1s) 
+[21/50] gan_vs_vae_01                          truth=1 eq=1(1.00/+1.00) lp=1(1.00/+1.00) (360.2s) 
+[22/50] gan_optimal_discriminator_01           truth=3 eq=3(0.60/+1.00) lp=3(0.94/+1.00) (387.7s) 
+[23/50] gan_mode_collapse_01                   truth=2 eq=2(1.00/+1.00) lp=2(1.00/+1.00) (309.0s) 
+[24/50] gan_wgan_lipschitz_01                  truth=1 eq=1(1.00/+1.00) lp=1(1.00/+1.00) (319.0s) 
+[25/50] gan_non_saturating_01                  truth=2 eq=2(1.00/+1.00) lp=2(1.00/+1.00) (299.5s) 
+[26/50] gan_js_optimum_01                      truth=1 eq=1(0.60/+1.00) lp=1(0.68/+1.00) (391.3s) 
+[27/50] gan_disjoint_support_01                truth=2 eq=2(0.40/+1.00) lp=4(0.31/-0.25) (345.4s) DIFFER
+[28/50] gan_wgan_gp_penalty_01                 truth=2 eq=2(1.00/+1.00) lp=2(1.00/+1.00) (287.7s) 
+[29/50] vae_elbo_decomposition_01              truth=1 eq=1(1.00/+1.00) lp=1(1.00/+1.00) (328.6s) 
+[30/50] vae_reparameterization_01              truth=3 eq=3(1.00/+1.00) lp=3(1.00/+1.00) (290.7s) 
+[31/50] vae_kl_closed_form_01                  truth=1 eq=1(0.60/+1.00) lp=1(0.62/+1.00) (433.6s) 
+[32/50] vae_posterior_collapse_01              truth=3 eq=3(1.00/+1.00) lp=3(1.00/+1.00) (329.8s) 
+[33/50] vae_bernoulli_decoder_01               truth=1 eq=1(1.00/+1.00) lp=1(1.00/+1.00) (352.0s) 
+[34/50] vae_elbo_gap_01                        truth=3 eq=3(0.60/+1.00) lp=3(0.60/+1.00) (606.7s) 
+[35/50] vae_beta_vae_01                        truth=3 eq=3(1.00/+1.00) lp=3(1.00/+1.00) (636.4s) 
+[36/50] vae_kl_compute_01                      truth=2 eq=2(0.40/+1.00) lp=2(0.62/+1.00) (890.9s) 
+[37/50] rnn_gru_vs_lstm_01                     truth=2 eq=2(1.00/+1.00) lp=2(1.00/+1.00) (340.2s) 
+[38/50] rnn_gradient_vanishing_01              truth=2 eq=2(0.80/+1.00) lp=2(0.72/+1.00) (413.4s) 
+[39/50] rnn_lstm_cell_update_01                truth=2 eq=2(0.60/+1.00) lp=2(0.68/+1.00) (350.0s) 
+[40/50] rnn_gru_param_count_01                 truth=2 eq=2(0.40/+1.00) lp=2(0.81/+1.00) (557.1s) 
+[41/50] rnn_lstm_cell_gradient_01              truth=1 eq=1(0.80/+1.00) lp=1(0.97/+1.00) (396.6s) 
+[42/50] rnn_exposure_bias_01                   truth=1 eq=1(1.00/+1.00) lp=1(1.00/+1.00) (308.7s) 
+[43/50] ae_linear_pca_01                       truth=2 eq=2(1.00/+1.00) lp=2(1.00/+1.00) (352.7s) 
+[44/50] ae_denoising_01                        truth=2 eq=2(1.00/+1.00) lp=2(1.00/+1.00) (324.3s) 
+[45/50] ae_sparse_penalty_01                   truth=2 eq=2(1.00/+1.00) lp=2(1.00/+1.00) (322.0s) 
+[46/50] ae_contractive_01                      truth=1 eq=1(1.00/+1.00) lp=1(1.00/+1.00) (331.9s) 
+[47/50] mlp_pytorch_01                         truth=1 eq=3(0.60/-0.25) lp=3(0.63/-0.25) (331.8s) 
+[48/50] dropout_inverted_01                    truth=1 eq=3(1.00/-0.25) lp=3(1.00/-0.25) (308.8s) 
+[49/50] bn_train_eval_01                       truth=2 eq=2(1.00/+1.00) lp=2(1.00/+1.00) (288.9s) 
+[50/50] init_he_vs_xavier_01                   truth=2 eq=2(0.80/+1.00) lp=2(0.91/+1.00) (276.4s) 
+
+======================================================================
+[summary] n=50  wall=18998.5s
+  metric                 equal-weight   logprob-weight
+  total score                  +40.00           +40.00
+  correct                          42               42
+  wrong                             8                8
+  skipped                           0                0
+  delta (lp - eq)                                +0.00
+
+[questions where rules disagree: 2]
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\Rishabh Kumar\GNR638_Project\experiments\logprob.py", line 159, in <module>
+    main()
+  File "C:\Users\Rishabh Kumar\GNR638_Project\experiments\logprob.py", line 143, in main
+    print(
+  File "C:\Program Files\Python312\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u2717' in position 51: character maps to <undefined>
